@@ -11,6 +11,7 @@ This repository contains multiple AI agent projects that demonstrate different a
 | [1-smolagent-summarizer](#1-smolagent-summarizer) | Summarizes Hugging Face daily papers | smolagents + HfApiModel | ✅ Complete |
 | [2-mygitrepos-summary](#2-mygitrepos-summary) | Batch GitHub repo summarizer | smolagents + HfApiModel | ✅ Complete |
 | [3-mcp-myrepos-summary](#3-mcp-myrepos-summary) | Interactive GitHub repo analyzer | GitHub API + Jupyter | ✅ Complete |
+| [4-linkedin-updater](#4-linkedin-updater) | LinkedIn profile to resume generator | OpenAI + LinkedIn API | ✅ Complete |
 
 ---
 
@@ -193,6 +194,73 @@ cd 3-mcp-myrepos-summary
 
 ---
 
+### 4-linkedin-updater
+
+**Purpose**: AI agent that fetches your LinkedIn profile data and automatically generates a professional resume in multiple formats.
+
+#### Features
+- 🔗 Fetches LinkedIn profile via API (with manual input fallback)
+- 📄 Generates resume in Markdown and PDF formats
+- 🤖 AI-powered content enhancement using OpenAI
+- ✨ Professional styling and formatting
+- 🔄 Update existing resumes with new information
+- 💾 Saves profile data as JSON for future updates
+
+#### Tech Stack
+- **Interface**: Jupyter Notebook + Command Line
+- **AI**: OpenAI GPT-4o-mini for content enhancement
+- **LinkedIn**: linkedin-api library
+- **Libraries**: requests, python-dotenv, weasyprint, markdown, jinja2
+
+#### Classes & Methods
+
+**`LinkedInClient`** - LinkedIn API wrapper
+| Method | Description |
+|--------|-------------|
+| `authenticate()` | Authenticate with LinkedIn credentials |
+| `get_profile(public_id)` | Fetch profile data |
+| `get_contact_info(public_id)` | Fetch contact information |
+
+**`ResumeGenerator`** - Resume creation engine
+| Method | Description |
+|--------|-------------|
+| `enhance_text(text, context)` | AI-powered text enhancement |
+| `generate_markdown(profile, enhance)` | Generate markdown resume |
+| `save_markdown(content, filepath)` | Save to .md file |
+| `generate_pdf(markdown, filepath)` | Convert to styled PDF |
+
+**`ManualProfileInput`** - Fallback data collection
+| Method | Description |
+|--------|-------------|
+| `get_profile_template()` | Returns empty profile structure |
+| `interactive_input()` | CLI-based profile data collection |
+
+#### Generated Output
+- `resume.md` - Markdown format resume
+- `resume.pdf` - Professionally styled PDF
+- `profile_data.json` - Profile data for future updates
+
+#### Usage
+```bash
+cd 4-linkedin-updater
+pip install -r requirements.txt
+
+# Interactive Notebook
+# Open linkedin-resume-agent.ipynb in VS Code
+
+# Command Line
+python main.py
+```
+
+#### Environment Variables Required
+```env
+OPENAI_API_KEY=your_openai_api_key
+LINKEDIN_EMAIL=your_linkedin_email        # Optional
+LINKEDIN_PASSWORD=your_linkedin_password  # Optional
+```
+
+---
+
 ## 📊 Architecture Overview
 
 ```
@@ -210,8 +278,14 @@ AI-Agents/
 │   ├── README.md                 # Project documentation
 │   └── AGENTS.md                 # Agent design notes
 │
-└── 3-mcp-myrepos-summary/        # Interactive repo analyzer
-    └── mcp-myrepos-summary.ipynb # Jupyter notebook with analyzer
+├── 3-mcp-myrepos-summary/        # Interactive repo analyzer
+│   └── mcp-myrepos-summary.ipynb # Jupyter notebook with analyzer
+│
+└── 4-linkedin-updater/           # LinkedIn resume generator
+    ├── main.py                   # Command-line agent
+    ├── linkedin-resume-agent.ipynb # Interactive notebook
+    ├── requirements.txt          # Python dependencies
+    └── README.md                 # Project documentation
 ```
 
 ---
@@ -222,6 +296,9 @@ AI-Agents/
 |-------|---------|--------------|
 | `GH_TOKEN` | GitHub API access | [GitHub Settings > Developer Settings > Personal Access Tokens](https://github.com/settings/tokens) |
 | `HF_TOKEN` | Hugging Face API | [Hugging Face Settings > Access Tokens](https://huggingface.co/settings/tokens) |
+| `OPENAI_API_KEY` | OpenAI API (for resume AI) | [OpenAI Platform > API Keys](https://platform.openai.com/api-keys) |
+| `LINKEDIN_EMAIL` | LinkedIn login (optional) | Your LinkedIn email |
+| `LINKEDIN_PASSWORD` | LinkedIn login (optional) | Your LinkedIn password |
 
 ### GitHub Token Permissions
 - `repo` - Full control of private repositories (or `public_repo` for public only)
